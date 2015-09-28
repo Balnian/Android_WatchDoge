@@ -58,38 +58,39 @@ public class Interface extends AppCompatActivity {
         TV_IP.setText("");
         PB_Progress.setProgress(0);
 
-
+        //Pars ou repars la tâche si toutes les données son conforme
         BT_Demarrer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //Vérifie si il est en pause ... si oui redémare la tâche
                 if(Pause) {
                     Pause = false;
                     BT_Suspendre.setEnabled(true);
                     BT_Demarrer.setEnabled(false);
 
                 }
-                else {
-                    if (isIP(TB_Addr.getText().toString())) {
+                else {      //si n'est pas en pause on fait les vérification sur le data et on part la tâche
+                    if (isIP(TB_Addr.getText().toString())) { // Vérifie si le sous-réseau est valide
                         try {
                             IDPlage = Integer.parseInt(TB_DPlage.getText().toString());
                         } catch (NumberFormatException e) {
                             IDPlage = null;
                         }
-                        if (IDPlage != null && IDPlage <= 254 && IDPlage > 1) {
+                        if (IDPlage != null && IDPlage <= 254 && IDPlage > 1) {  // Vérifie si le Début de la plage entrer est correcte
                             try {
                                 IFPlage = Integer.parseInt(TB_FPlage.getText().toString());
                             } catch (NumberFormatException e) {
                                 IFPlage = null;
                             }
-                            if (IFPlage != null && IFPlage > 4 && IFPlage < 255) {
-                                if (IFPlage >= IDPlage) {
+                            if (IFPlage != null && IFPlage > 4 && IFPlage < 255) {  // Vérifie si la Fin de la plage entrer est correcte
+                                if (IFPlage >= IDPlage) {  //Vérifie que le début de la plage est plus petit que la fin
                                     try {
                                         port = Integer.parseInt(TB_Port.getText().toString());
                                     } catch (NumberFormatException e) {
                                         port = null;
                                     }
-                                    if (port != null && port <= 65535 && port >= 0) {
+                                    if (port != null && port <= 65535 && port >= 0) {  // Vérifie si le Port entrer est correcte
                                         IP = TB_Addr.getText().toString();
                                         TV_IP.setText("");
 
@@ -99,7 +100,7 @@ public class Interface extends AppCompatActivity {
                                         PingPong qwe = new PingPong();
                                         qwe.execute();
 
-                                    } else {
+                                    } else {   // si le port entrer n'est pas correct on affiche un message personnaliser selon l'erreur
                                         if (port == null) {
                                             Toast.makeText(getApplicationContext(), "Le port n'est pas valide", Toast.LENGTH_LONG).show();
                                         } else if (!(port <= 65535)) {
@@ -108,10 +109,10 @@ public class Interface extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "Le port est trop bas", Toast.LENGTH_LONG).show();
                                         }
                                     }
-                                } else {
+                                } else {  // On informe ue le début de la plage entrer n,est pas plus petit que la fin
                                     Toast.makeText(getApplicationContext(), "Le début de la plage d'adresse est plus grand que la fin!!!", Toast.LENGTH_LONG).show();
                                 }
-                            } else {
+                            } else {   // si la fin de la plage entrer n'est pas correct on affiche un message personnaliser selon l'erreur
                                 if (IFPlage == null) {
                                     Toast.makeText(getApplicationContext(), "La fin de la Plage d'adresse n'est pas un nombre valide", Toast.LENGTH_LONG).show();
                                 } else if (!(IFPlage > 4)) {
@@ -121,7 +122,7 @@ public class Interface extends AppCompatActivity {
                                 }
                             }
 
-                        } else {
+                        } else {  // si le début de la plage entrer n'est pas correct on affiche un message personnaliser selon l'erreur
                             if (IDPlage == null)
                                 Toast.makeText(getApplicationContext(), "Le début de la Plage d'adresse n'est pas un nombre valide", Toast.LENGTH_LONG).show();
                             else if (!(IDPlage <= 254))
@@ -129,7 +130,7 @@ public class Interface extends AppCompatActivity {
                             else if (!(IDPlage > 1))
                                 Toast.makeText(getApplicationContext(), "Le début de la Plage d'adresse est trop basse", Toast.LENGTH_LONG).show();
                         }
-                    } else {
+                    } else {  // si l'adresse de sous-réseau n'est pas valide on informe l'usager
                         Toast.makeText(getApplicationContext(), "L'adresse de sous-réseau n'est pas valide!!!", Toast.LENGTH_LONG).show();
 
                     }
@@ -141,6 +142,7 @@ public class Interface extends AppCompatActivity {
 
             );
 
+        //Suspend la tâche asynchrone
         BT_Suspendre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,31 +155,6 @@ public class Interface extends AppCompatActivity {
         }
 
     private boolean isIP(String IP){
-        /*Character[] Values = {'1','2','3','4','5','6','7','8','9','0','.'};
-        boolean result = true;
-        int pointCount=0;
-        //vérifie que l'ip ne commence pas et ne fini pas par un point
-        if(IP.startsWith(".")||IP.endsWith(".") ) {
-            result = false
-        }
-        //Vérifie chaque character
-        for (int i = 0; i<IP.length();i++){
-            if(!(Arrays.asList(Values).contains(IP.charAt(i)))) {
-                result = false;
-            }
-            else if(IP.charAt(i) == '.'){
-                pointCount++;
-            }
-        }
-        //Vérifie qu'il y a le bont nombre de point (séparateur)
-        if(pointCount!=2) {
-            result = false;
-        }
-        if(! IP.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"))
-            result=false;
-
-        return result;*/
-        
         //Beaucoup plus simple comme sa :)
         return IP.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
     }
@@ -206,30 +183,21 @@ public class Interface extends AppCompatActivity {
 
 
     private class PingPong extends AsyncTask<Void,Integer, Void> {
-    /*@Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        Toast.makeText(getApplicationContext(),
-                "Début du traitement asynchrone",
-                Toast.LENGTH_SHORT).show();
-    }*/
+
 
     @Override
     protected Void doInBackground(Void... args) {
         int progres;
-        /*int debut = Integer.parseInt(args[0]);
-        int fin = Integer.parseInt(args[1]);
-        int port = Integer.parseInt(args[2]);
-        String ip = args[3];*/
+
         for (progres = IDPlage; progres <= IFPlage ; progres++)
         {
-            while (Pause)
+            while (Pause)  // si en pause on sleep 100 puis on reverifie
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            // this is bullshit calculation :)
+            // on essaie de se connecter si sa réussie pas on met -1 dans le progress suivi de la valeur que l'on vien dessayer si non ont met seulement la valeur
             Socket s = new Socket();
             try {
                 s.connect(new InetSocketAddress(IP+"."+Integer.toString(progres),port),500);
@@ -250,25 +218,27 @@ public class Interface extends AppCompatActivity {
     @Override
     protected void onProgressUpdate(Integer... valeurs) {
         super.onProgressUpdate(valeurs);
+
+        // Si le premier nombre est -1 on vérifie le deuxième et on update la progresse bar sans rajouter l'adresse au textview
         if(valeurs[0].equals(-1)) {
             int a = valeurs[1] - IDPlage;
             int b = IFPlage - IDPlage;
-            if(b != 0) {
+            if(b != 0) { // si b = 0 ces une division par 0 donc pas bon mais sa veux aussi dire que on avait seulement 1 élément à essayer donc on peux juste mettre 100% "and call it a day"
                 int c = Math.round((Float.intBitsToFloat(a) / Float.intBitsToFloat(b)) * 100);
                 PB_Progress.setProgress(c);
             }
-            else{
+            else{ //ont met le 100% ici quand ces 0 :)
                 PB_Progress.setProgress(100);
             }
         }
         else {
             int a = valeurs[0] - IDPlage;
             int b = IFPlage - IDPlage;
-            if(b != 0) {
+            if(b != 0) { // si b = 0 ces une division par 0 donc pas bon mais sa veux aussi dire que on avait seulement 1 élément à essayer donc on peux juste mettre 100% "and call it a day"
                 int c = Math.round((Float.intBitsToFloat(a) / Float.intBitsToFloat(b)) * 100);
                 PB_Progress.setProgress(c);
             }
-            else{
+            else{ //ont met le 100% ici quand ces 0 :)
                 PB_Progress.setProgress(100);
             }
             TV_IP.append(IP+"."+Integer.toString(valeurs[0])+"\n");
@@ -280,7 +250,9 @@ public class Interface extends AppCompatActivity {
 
     @Override
     protected void onPostExecute(Void resultat) {
+        //en finissant on met le progress a 100% au cas où il y aillent des erreurs d'arrondie 
         PB_Progress.setProgress(100);
+        //lorsque le processu fini on met les boutons dans un état pour pouvoir relancer une nouvelle tache avec de nouveaux paramêtre
         BT_Demarrer.setEnabled(true);
         BT_Suspendre.setEnabled(false);
     }
