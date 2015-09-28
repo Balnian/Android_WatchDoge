@@ -108,7 +108,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/PB_Progress"
                 android:progress="50"
-                android:indeterminate="false" />
+                android:indeterminate="false"
+                android:max="100"
+                android:indeterminateOnly="false" />
         </LinearLayout>
 
         <LinearLayout
