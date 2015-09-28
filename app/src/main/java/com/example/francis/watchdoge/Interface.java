@@ -250,7 +250,7 @@ public class Interface extends AppCompatActivity {
 
     @Override
     protected void onPostExecute(Void resultat) {
-        //en finissant on met le progress a 100% au cas où il y aillent des erreurs d'arrondie 
+        //en finissant on met le progress a 100% au cas où il y aillent des erreurs d'arrondie
         PB_Progress.setProgress(100);
         //lorsque le processu fini on met les boutons dans un état pour pouvoir relancer une nouvelle tache avec de nouveaux paramêtre
         BT_Demarrer.setEnabled(true);

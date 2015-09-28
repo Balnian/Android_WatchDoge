@@ -47,10 +47,13 @@
                 android:layout_weight="0.19" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="155dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
                 android:id="@+id/TB_DPlage"
-                android:layout_weight="0.47" />
+                android:layout_weight="0.01" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -67,10 +70,13 @@
                 android:layout_weight="0.26" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="151dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
                 android:id="@+id/TB_FPlage"
-                android:layout_weight="0.47" />
+                android:layout_weight="0.03" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -92,7 +98,7 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/TB_Port"
-                android:layout_weight="1.37" />
+                android:layout_weight="1.61" />
 
         </LinearLayout>
 
